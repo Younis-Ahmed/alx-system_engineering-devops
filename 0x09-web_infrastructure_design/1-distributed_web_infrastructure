@@ -1,0 +1,18 @@
+Distributed web infrastructure
+
+For every additional element, why you are adding it?
+Linux server: Linux is the obvious solution, Known for it's flexibility, performance, security, and cost-effectiveness have contributed to its widespread adoption in server deployments across diverse industries and applications.
+
+HAProxy (load balancer): HAProxy evenly distributes incoming network traffic across multiple backend servers. By spreading the workload, it helps prevent any single server from being overwhelmed, ensuring optimal utilization of resources and improving overall performance
+
+Other elements were specified on task
+What distribution algorithm your load balancer is configured with and how it works?
+round-robin algorithm When a new request arrives, the load balancer routes the request to the next server in the list. It continues this sequential rotation, cycling through the servers in order, ensuring that each server receives an equal share of requests.
+Is your load-balancer enabling an Active-Active or Active-Passive setup, explaining the difference between both?
+My infra uses Active-Active to handle all incoming traffic simultaneously.
+
+Active-Active: Each server shares the workload and serves a portion of the overall traffic. This approach aims to maximize resource utilization and scalability. If one server fails or becomes unavailable, the remaining servers continue to handle the traffic without interruption
+
+Active-Passive:one server (the active server) actively handles incoming traffic and processes requests, while the remaining servers (the passive nodes) are in standby mode. The passive nodes are idle and do not actively participate in serving traffic unless the active node fails or becomes unavailable.
+How does a database Primary-Replica (Master-Slave) cluster work?
+I used the Master-Master replication method to ensure all nodes can write and replicate from all other nodes, since I'm using active-active all instances are activated and master-slave doesn't make sense in this case.
