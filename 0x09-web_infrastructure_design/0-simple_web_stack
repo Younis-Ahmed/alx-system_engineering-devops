@@ -1,0 +1,31 @@
+simple_web_stack
+What is a server?
+A server is a computer or a system that provides services or resources to other computers or devices on a network. It is designed to handle specific tasks and respond to requests from client devices. Servers are an essential component of network infrastructure and play a crucial role in various domains, including web hosting, email services, file sharing, database management, and more.
+
+
+
+
+What is the role of the domain name?
+The domain name plays a crucial role in identifying and locating resources on the internet. It serves as a user-friendly and memorable address that represents the online presence of an organization, website, or service.
+
+What type of DNS record www is in www.foobar.com?
+CNAME DNS type
+
+
+What is the role of the web server?
+The primary role of a web server is to deliver web content to client devices upon receiving HTTP (Hypertext Transfer Protocol) requests. It serves web pages, images, CSS files, JavaScript files, and other resources that make up a website or web application.
+What is the role of the application server?
+It typically handles business logic on application level, The primary role of an application server is to execute and run web applications. It provides a runtime environment that supports the execution of application code written in various programming languages
+What is the role of the database?
+
+Managing structured data for various applications. It serves as a central repository for data storage and provides mechanisms for efficient data retrieval, manipulation, and persistence using ACID pattern.
+
+What is the server using to communicate with the computer of the user requesting the website?
+
+HTTP is the foundation of data communication on the World Wide Web and enables the exchange of information between the web server and the client's computer.
+
+SPOF stands for Single Point of Failure. It refers to a component, system, or process in a larger system that, if it fails, would cause the entire system to fail or significantly degrade its functionality. A single point of failure represents a vulnerability because it lacks redundancy or backup measures to ensure the system's continued operation in the event of a failure.
+The infrastructure has SPOF of web server, database, application server which all has bad single point of failure with no rededuncy.
+
+In case of maintenance the downtime would be nth time til server is up due to non-instantiation based infrastructure.
+
