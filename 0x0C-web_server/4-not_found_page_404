@@ -11,4 +11,4 @@ sudo sed -i 's/location \/ {/location \/redirect_me { return 301 https:\/\/www.y
 sudo sed -i '/listen 80 default_server;/a\\n\terror_page 404 /404.html;\n\t\tlocation = /404.html {\n\t\troot /var/www/html;\n\t\tinternal;\n\t}' /etc/nginx/sites-available/default
 
 sudo nginx -t
-sudo service nginx restart
+sudo systemctl restart nginx
