@@ -1,26 +1,33 @@
 #!/usr/bin/python3
-"""fetches information from JSONplaceholder API and exports to CSV"""
+""" Write a Python script that, using this REST API,
+for a given employee ID,
+returns information about his/her TODO list progress.
+"""
+import csv
+import requests
+import sys
 
-from csv import DictWriter, QUOTE_ALL
-from requests import get
-from sys import argv
+
+def fetchdata(user_id):
+    """ Write a Python script that, using this REST API,
+    for a given employee ID,
+    returns information about his/her TODO list progress.
+    """
+    if user_id is None:
+        return
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(user_id)).json()
+    username = user.get("username")
+    tott = requests.get(url + "todos", params={"userId": user_id}).json()
+
+    with open("{}.csv".format(user_id), "w", newline="") as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        [writer.writerow(
+            [user_id, username, t.get("completed"), t.get("title")]
+                ) for t in tott]
 
 
-if __name__ == "__main__":
-    main_url = "https://jsonplaceholder.typicode.com"
-    todo_url = main_url + "/user/{}/todos".format(argv[1])
-    name_url = main_url + "/users/{}".format(argv[1])
-    todo_result = get(todo_url).json()
-    name_result = get(name_url).json()
-
-    todo_list = []
-    for todo in todo_result:
-        todo_dict = {}
-        todo_dict.update({"user_ID": argv[1], "username": name_result.get(
-            "username"), "completed": todo.get("completed"),
-                          "task": todo.get("title")})
-        todo_list.append(todo_dict)
-    with open("{}.csv".format(argv[1]), 'w', newline='') as f:
-        header = ["user_ID", "username", "completed", "task"]
-        writer = DictWriter(f, fieldnames=header, quoting=QUOTE_ALL)
-        writer.writerows(todo_list)
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        exit(0)
+    fetchdata(sys.argv[1])
