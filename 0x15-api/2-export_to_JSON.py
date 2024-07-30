@@ -1,24 +1,36 @@
 #!/usr/bin/python3
-"""fetches information from JSONplaceholder API and exports to JSON"""
+"""Exports to-do list information of all employees to JSON format."""
+import json
+import requests
+import sys
 
-from json import dump
-from requests import get
-from sys import argv
+
+def fetchdata(user_id):
+    """ do json file from aspi"""
+    if user_id is None:
+        return
+
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(user_id)).json()
+    username = user.get("username")
+    tott = requests.get(url + "todos", params={"userId": user_id}).json()
+    result = {}
+    result[str(user_id)] = []
+    for task in tott:
+        result[str(user_id)].append({
+            "task": task["title"],
+            "completed": task["completed"],
+            "username": username
+        })
+
+    # Now, let's save the data to a JSON file
+    filename = f'{user_id}.json'
+
+    with open(filename, 'w') as jsonfile:
+        json.dump(result, jsonfile)
 
 
-if __name__ == "__main__":
-    todo_url = "https://jsonplaceholder.typicode.com/user/{}/todos".format(
-        argv[1])
-    name_url = "https://jsonplaceholder.typicode.com/users/{}".format(argv[1])
-    todo_result = get(todo_url).json()
-    name_result = get(name_url).json()
-
-    todo_list = []
-    for todo in todo_result:
-        todo_dict = {}
-        todo_dict.update({"task": todo.get("title"), "completed": todo.get(
-            "completed"), "username": name_result.get("username")})
-        todo_list.append(todo_dict)
-
-    with open("{}.json".format(argv[1]), 'w') as f:
-        dump({argv[1]: todo_list}, f)
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        exit(0)
+    fetchdata(sys.argv[1])
