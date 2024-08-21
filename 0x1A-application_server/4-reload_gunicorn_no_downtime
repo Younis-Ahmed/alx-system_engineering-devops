@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Reloads Gunicorn.
+
+# Use pgrep instead of ps and grep to find the process ID of gunicorn
+pgrep gunicorn | xargs kill -HUP
+
