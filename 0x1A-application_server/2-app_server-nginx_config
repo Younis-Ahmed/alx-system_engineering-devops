@@ -1,0 +1,39 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        # IP as domain name
+        server_name 54.146.94.249
+
+
+        # serve /airbnb-onepage/ route on Airbnb_clone
+        location /airbnb-onepage/ {
+                proxy_pase http://127.0.0.1:5000/airbnb-onepage/;
+        }
+        location /redirect_me {
+                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        }
+
+
+        add_header X-Served-By 384026-web-01;
+
+         error_page 404 /xyz;
+         location = /xyz {
+        root /var/www/html;
+        internal;}
+
+
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+
+}
